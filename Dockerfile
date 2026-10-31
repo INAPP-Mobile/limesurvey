@@ -29,8 +29,9 @@
 #   limesurvey, ADMIN_NAME/ADMIN_EMAIL defaults. Railway's `templates
 #   create` only carries ${{...}} expressions into template defaults, so
 #   every literal lives here, not on the deploy form. The only template
-#   variables are DB_PASSWORD (${{postgres.POSTGRES_PASSWORD}}) and
-#   ADMIN_PASSWORD (${{secret(32)}}), both single references.
+#   variables are DB_HOST (${{postgres.RAILWAY_PRIVATE_DOMAIN}}),
+#   DB_PASSWORD (${{postgres.POSTGRES_PASSWORD}}) and
+#   ADMIN_PASSWORD (${{secret(32)}}), all single references.
 # - No Docker HEALTHCHECK: the base image has no curl/wget guarantee for a
 #   healthcheck binary; Railway's external healthcheckPath covers it.
 #

@@ -52,6 +52,7 @@ fill in.
 | Variable | Service | Default | What it does |
 | --- | --- | --- | --- |
 | `ADMIN_PASSWORD` | limesurvey | `${{secret(32)}}` | Initial admin password (username `admin`). Change it after first login. |
+| `DB_HOST` | limesurvey | `${{postgres.RAILWAY_PRIVATE_DOMAIN}}` | Companion host on the private network. |
 | `DB_PASSWORD` | limesurvey | `${{postgres.POSTGRES_PASSWORD}}` | Database password, auto-wired from the companion. |
 | `POSTGRES_PASSWORD` | postgres | `${{secret(32)}}` | Database password for the companion. |
 
@@ -60,7 +61,6 @@ Baked into the app image (change only if you fork the repo):
 | Variable | Default | What it does |
 | --- | --- | --- |
 | `DB_TYPE` | `pgsql` | Database driver (PostgreSQL). |
-| `DB_HOST` | `${{postgres.RAILWAY_PRIVATE_DOMAIN}}` | Companion host on the private network. |
 | `DB_PORT` | `5432` | Companion port. |
 | `DB_NAME` / `DB_USERNAME` | `limesurvey` | Database name and user. |
 | `DB_TABLE_PREFIX` | `lime_` | Prefix for LimeSurvey tables. |

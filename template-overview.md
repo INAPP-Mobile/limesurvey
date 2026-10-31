@@ -55,7 +55,8 @@ there is nothing else to provision.
 - Memory at rest: roughly 300–500 MB for the app plus PostgreSQL; the
   app is always on, so usage accrues while idle as well as under load.
 - Env var reference: `ADMIN_PASSWORD` (generated, initial admin
-  password), `DB_PASSWORD` (auto-wired from the companion),
+  password), `DB_HOST` (auto-wired companion host), `DB_PASSWORD`
+  (auto-wired from the companion),
   `POSTGRES_PASSWORD` (generated, companion password). Baked constants:
   `DB_TYPE=pgsql`, `DB_PORT=5432`, `DB_NAME`/`DB_USERNAME=limesurvey`,
   `DB_TABLE_PREFIX=lime_`, `ADMIN_NAME`, `ADMIN_EMAIL`, `DEBUG=0`.
