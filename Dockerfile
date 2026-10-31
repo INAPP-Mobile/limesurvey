@@ -62,6 +62,14 @@ ENV DB_TYPE=pgsql \
 COPY entrypoint.sh /usr/local/bin/railway-entrypoint.sh
 RUN chmod +x /usr/local/bin/railway-entrypoint.sh
 
+# Static health probe (no extension: Railway's API rejects healthcheck
+# paths containing a dot, so the login page's /index.php/... form cannot
+# be used as the healthcheck). LimeSurvey's root .htaccess serves existing
+# files directly, so this bypasses Yii entirely and answers 200 whenever
+# Apache is up. The repo and template-path e2e still verify the real login
+# page and the full survey workflow separately.
+COPY healthcheck /var/www/html/healthcheck
+
 LABEL org.opencontainers.image.source="https://github.com/INAPP-Mobile/limesurvey"
 
 EXPOSE 8080

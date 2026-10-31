@@ -95,8 +95,10 @@ you can set on the service after deploy if you need them:
 
 - Runtime: PHP 8.5 + Apache (upstream image), PostgreSQL 16 companion.
 - Port: Railway's injected `PORT`, mapped to Apache at boot.
-- Healthcheck: `/index.php/admin/authentication/sa/login` (the admin
-  login page, reachable without authentication).
+- Healthcheck: `/admin/authentication/sa/login` (the admin
+  login page, reachable without authentication; Railway's API rejects
+  paths containing `.php`, so the rewritten no-script-name form is used —
+  LimeSurvey's root `.htaccess` routes it to the same login page).
 - Upstream: [LimeSurvey](https://www.limesurvey.org/) 7.8.0, GPL-2.0-or-later.
 - Image: `martialblog/limesurvey:7.8.0-261026-apache`, pinned by digest.
 
