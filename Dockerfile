@@ -6,6 +6,10 @@
 #   (default 8080). entrypoint.sh maps PORT -> LISTEN_PORT at boot, the
 #   same pattern as the GoToSocial template. Without this, Railway's
 #   healthcheck would probe a port nothing listens on.
+# - MPM: the upstream image ships with more than one MPM enabled and
+#   Apache refuses to start (AH00534). entrypoint.sh removes every MPM
+#   module and enables only prefork (required by mod_php) — the fix proven
+#   by the existing Railway LimeSurvey template.
 # - USER root: Railway mounts persistent volumes root-owned. The upstream
 #   image runs as www-data, which would crash-loop on EACCES writing to
 #   /data. The wrapper entrypoint runs as root, prepares /data (uploads +

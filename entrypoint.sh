@@ -25,6 +25,17 @@ case "${PUBLIC_URL:-}" in
     ;;
 esac
 
+# 3a. Apache MPM fix (proven by the incumbent Railway template): the
+# upstream image ships with more than one MPM enabled (Debian Trixie's
+# mpm_event plus php's mpm_prefork), and Apache refuses to start with
+# "AH00534: More than one MPM loaded". Remove every MPM module and enable
+# only prefork, which mod_php requires.
+rm -f /etc/apache2/mods-enabled/mpm_event.load /etc/apache2/mods-enabled/mpm_event.conf
+rm -f /etc/apache2/mods-enabled/mpm_worker.load /etc/apache2/mods-enabled/mpm_worker.conf
+rm -f /etc/apache2/mods-enabled/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.conf
+a2enmod mpm_prefork >/dev/null
+echo "[entrypoint] Apache MPM fixed to prefork."
+
 # 3. Persistent volume (/data, mounted by Railway, root-owned on arrival).
 # Uploads and the generated security.php must survive restarts; everything
 # else (config.php, Yii runtime caches) is regenerated from the environment.
@@ -40,6 +51,17 @@ if [ ! -L /var/www/html/upload ]; then
   rm -rf /var/www/html/upload
   ln -s /data/upload /var/www/html/upload
   echo "[entrypoint] upload dir -> /data/upload."
+fi
+
+# Theme seed (incumbent-template lesson): the app expects the survey
+# themes under upload/themes/survey, but the image ships them under
+# themes/survey. Copy them into the volume once so theme rendering never
+# 404s after the volume hides the image's packaged upload content.
+if [ ! -e /data/upload/themes/survey/vanilla ] && [ -d /var/www/html/themes/survey ]; then
+  mkdir -p /data/upload/themes
+  cp -a /var/www/html/themes/survey /data/upload/themes/survey
+  chown -R www-data:www-data /data/upload/themes
+  echo "[entrypoint] survey themes seeded into /data/upload/themes."
 fi
 
 # security.php: LimeSurvey generates this on first boot and it MUST persist
