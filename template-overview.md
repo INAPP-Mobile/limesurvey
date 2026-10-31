@@ -1,5 +1,7 @@
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/limesurvey?utm_campaign=limesurvey)
 
+![LimeSurvey administration login](https://raw.githubusercontent.com/INAPP-Mobile/limesurvey/main/assets/limesurvey-ui.png)
+
 # Deploy and Host
 
 LimeSurvey is a free, open-source survey platform — a self-hosted

@@ -11,6 +11,8 @@ first boot — sign in with username `admin` and the generated password.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/limesurvey?utm_campaign=limesurvey)
 
+![LimeSurvey administration login](assets/limesurvey-ui.png)
+
 ## Deploy and Host
 
 One click deploys two services: the LimeSurvey 7.8 app (PHP + Apache,
@@ -95,10 +97,14 @@ you can set on the service after deploy if you need them:
 
 - Runtime: PHP 8.5 + Apache (upstream image), PostgreSQL 16 companion.
 - Port: Railway's injected `PORT`, mapped to Apache at boot.
-- Healthcheck: `/admin/authentication/sa/login` (the admin
-  login page, reachable without authentication; Railway's API rejects
-  paths containing `.php`, so the rewritten no-script-name form is used —
-  LimeSurvey's root `.htaccess` routes it to the same login page).
+- Healthcheck: `/healthcheck` (a static extensionless probe file shipped
+  in the image; Railway's API rejects healthcheck paths containing a
+  dot, so the login page's `/index.php/...` form cannot be used, and
+  the no-script-name admin route returned a 301 redirect under
+  Railway's probe. The probe proves the web server is up; the login
+  page plus the full survey workflow are verified by e2e instead).
+  The admin login page itself is `/index.php/admin/authentication/sa/login`
+  and returns 200 without authentication.
 - Upstream: [LimeSurvey](https://www.limesurvey.org/) 7.8.0, GPL-2.0-or-later.
 - Image: `martialblog/limesurvey:7.8.0-261026-apache`, pinned by digest.
 
