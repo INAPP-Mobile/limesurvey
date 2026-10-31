@@ -9,7 +9,7 @@ companion, persistent volumes for uploads and the database, and a
 zero-field deploy form. The admin account is created automatically on
 first boot — sign in with username `admin` and the generated password.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/limesurvey?utm_campaign=limesurvey)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/limesurvey-1?utm_campaign=limesurvey)
 
 ![LimeSurvey administration login](assets/limesurvey-ui.png)
 
